@@ -1,0 +1,2 @@
+07/08/2020 - Tentei cria a conta free na AWS deu problema na ativação da conta.
+Tiver que abrir um chamado a amazon para tentar idientificar o problema.
