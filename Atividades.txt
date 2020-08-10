@@ -1,0 +1,71 @@
+07/08/2020 - Tentei cria a conta free na AWS deu problema na ativação da conta.
+Tiver que abrir um chamado a amazon para tentar idientificar o problema.
+
+Para nao perder tempo criei uma nova conta com outro email que tenho. Emails da antiga hotmail.
+
+
+
+1 - Criar um novo banco de dados RDS MSSQL com nome de dba-teste1.
+Criado as intancias db-teste1
+
+9 - Criar um novo banco de dados RDS dba-teste2.
+ db-teste2.
+
+Tive um pouco de dificuldade para liberar acesso remoto ao sqlserver.  
+Tive que liberar acesso publico e liberar as porta de input e out.
+Não e correto liberar todas as portas, sendo que podemos liberar somente a porta 1433 para conectar.
+
+Mas como se trata de uma poc, deixei liberado tudo para nao perder tempo. O ideal e utilizar um gateway para liberar esses acesso.
+
+09/08/2020 
+7 - Simular deadklocks e  
+8 - Identificar os deadlocks que ocorreram na instância.
+
+
+
+Criei um script para simular o deadlock
+O script funcionou sem nenhum problema.
+
+No entanto como preciso pegar os deadlocks que ocorreram no banco de dados, 
+precisava ativar os parametros de trace utilizando o comando DBCC TRACEON (1222,-1).
+Apresentou erro ao executar o comando acima.
+
+Então decedi criar um Parameter groups para ativar o trace 1222.
+Alterei o instancia no RDS console utilizado o novo parameter group que foi criado.
+
+Realizei novamente o teste de deadlock e consegui encontrar os deadklock que ocorrem na base.
+
+5 - Criar um bucket S3 com o nome XXXX-XXXX-XXXX-dba-teste(XXX é o número da sua conta AWS).
+6 - Fazer backup do banco de dados dba-teste1 para um bucket S3.
+Criado o area Buckets do S3 137663864339-dba-teste.
+
+Criado um backup da base de teste.
+
+
+
+Ao verificar o backup não havia funcionado, fui identificar o erro e verifiquei que o erro era e 
+identifiquei que criei o buckets na regiao diferente.
+
+
+Recriei o bucket apontado para regiao correta.
+Liberei acesso publico para gravar o backup, mas não recomendado.
+
+exec msdb.dbo.rds_backup_database 
+@source_db_name='teste', @s3_arn_to_backup_to='arn:aws:s3:::137663864339-dba-teste1/teste.bak', 
+@overwrite_S3_backup_file=1;
+
+
+10 - Migrar o conteúdo do banco de dados dba-teste1 para dba-teste2.
+
+Para migrar os dados de uma instancia para outra, foi utilizado o metodo de backup/restore, utilizado S3 bucket como area de tranferencia.
+
+
+
+
+Servidores:
+
+
+db-teste1.cjhnhz0vr7mr.sa-east-1.rds.amazonaws.com
+dba-teste2.cjhnhz0vr7mr.sa-east-1.rds.amazonaws.com
+
+
