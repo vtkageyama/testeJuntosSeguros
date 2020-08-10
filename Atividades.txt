@@ -60,6 +60,16 @@ exec msdb.dbo.rds_backup_database
 Para migrar os dados de uma instancia para outra, foi utilizado o metodo de backup/restore, utilizado S3 bucket como area de tranferencia.
 
 
+10/08/2020
+
+4 - Criar agendamento de snapshot.
+ Configurado o snapsho para as 00hrs mantendo por 7 dias a copia.
+
+2 - Criar uma nova estrutura de tabelas para cadastro de usuários utilizando as boas práticas. Exemplo: Tabela Users, Profiles, Roles.
+3 - Inserir dados nas novas tabelas.
+Criado as tabelas e inseridos dados.
+
+
 
 
 Servidores:
@@ -67,5 +77,4 @@ Servidores:
 
 db-teste1.cjhnhz0vr7mr.sa-east-1.rds.amazonaws.com
 dba-teste2.cjhnhz0vr7mr.sa-east-1.rds.amazonaws.com
-
 
